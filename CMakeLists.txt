@@ -5,4 +5,4 @@ set(CMAKE_C_STANDARD 99)
 
 add_executable(list liblist/list.c liblist/list.h)
 
-add_executable(TP2Graph main.c graph.h)
+add_executable(TP2Graph main.c liblist/list.c graph.h liblist/list.h)

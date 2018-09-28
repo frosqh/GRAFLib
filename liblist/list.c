@@ -2,7 +2,7 @@
 #define addToEnd(...) var_addToEnd((values){__VA_ARGS__});
 #define addToStart(...) var_addToStart((values){__VA_ARGS__});
 
-int main(int argc, char* argv){
+/*int main(int argc, char* argv){
 	struct cchainedList* list= newChainedList(); //-1;6;9;5;13
 	addToStart(list, 5);
 	addToStart(list, 6);
@@ -15,7 +15,7 @@ int main(int argc, char* argv){
 	printf("Last : %d\n",list->prev->value);
 	printf("Start : %d\n",goToStart(list)->next->value);
 	freeList(list);
-}
+}*/
 
 void base_addToEnd(struct cchainedList* list, int value, int secondValue){
 	if (list==NULL){
