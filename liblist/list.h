@@ -1,29 +1,36 @@
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef __LIST_H
+	#define __LIST_H
+	#ifndef __STDIO_H
+		#define __STDIO_H
+		#include <stdio.h>
+	#endif
+	#ifndef __STDLIB_H
+		#define __STDLIB_H
+		#include <stdlib.h>
+	#endif
 
-struct cchainedList{
-	struct cchainedList* prev;
-	int value;
-	int secondValue;
-	struct cchainedList* next;
-};
+	struct cchainedList{
+		struct cchainedList* prev;
+		int value;
+		int secondValue;
+		struct cchainedList* next;
+	};
 
-typedef struct {
-	struct cchainedList* list;
-	int value;
-	int secondValue;
-} values;
+	typedef struct {
+		struct cchainedList* list;
+		int value;
+		int secondValue;
+	} values;
 
-//void addToEnd(struct cchainedList* list, int value);
-void var_addToEnd(values in);
-void var_addToStart(values in);
-void freeList(struct cchainedList* list);
-//void addToStart(struct cchainedList* list, int value);
-void base_addToEnd(struct cchainedList* list, int value, int secondValue);
-void base_addToStart(struct cchainedList* list, int value, int secondValue);
-struct cchainedList* newChainedList();
-struct cchainedList* goToStart(struct cchainedList* list);
-void removeFromList(struct cchainedList* list);
-void removeIndex(struct cchainedList* list, int i);
-void removeValue(struct cchainedList* list, int value);	
-static struct cchainedList* auxRemove(struct cchainedList* list, int diff);
+	
+	int var_addToEnd(values in);
+	int var_addToStart(values in);
+	int freeList(struct cchainedList* list);
+	int base_addToEnd(struct cchainedList* list, int value, int secondValue);
+	int base_addToStart(struct cchainedList* list, int value, int secondValue);
+	struct cchainedList* newChainedList();
+	struct cchainedList* goToStart(struct cchainedList* list);
+	int removeFromList(struct cchainedList* list);
+	int removeIndex(struct cchainedList* list, int i);
+	int removeValue(struct cchainedList* list, int value);
+#endif
