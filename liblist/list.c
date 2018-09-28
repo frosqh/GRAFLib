@@ -18,9 +18,8 @@
 #define addToEnd(...) var_addToEnd((values){__VA_ARGS__});
 #define addToStart(...) var_addToStart((values){__VA_ARGS__});
 
-
-int main(int argc, char* argv){
-	struct cchainedList* list= newChainedList();
+/*int main(int argc, char* argv){
+	struct cchainedList* list = newChainedList();
 	addToStart(list, 5);
 	addToStart(list, 6);
 	addToEnd(list, 13,9);
@@ -32,7 +31,7 @@ int main(int argc, char* argv){
 	printf("Last : %d\n", list->prev->value);
 	printf("Start : %d\n", goToStart(list)->next->value);
 	freeList(list);
-}
+}*/
 
 
 /*
