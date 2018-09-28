@@ -10,7 +10,7 @@ int main(int argc, char* argv){
 	struct cchainedList secondList;
 	secondList = *(list->next);
 	addToStart(&secondList,9);
-	//removeIndex(secondList.next,2);
+	removeIndex(secondList.next,3);
 	printf("1st : %d\n",list->value);
 	printf("2nd : %d\n",secondList.value);
 	printf("3rd : %d\n",secondList.next->value);
@@ -100,7 +100,7 @@ void removeFromList(struct cchainedList* list){
 		printf("Whoops\n");
 		exit(2);
 	}
-	printf("Suppression de la valeur %d\n",list->value);
+	
 	list->prev->next = list->next;
 	list->next->prev = list->prev;
 	free(list);
@@ -112,8 +112,11 @@ void removeIndex(struct cchainedList* list, int i){
 		exit(1);
 	}
 	struct cchainedList* startList = goToStart(list);
-	printf("%d\n",startList->value);
-	removeFromList(auxRemove(startList, i));
+	while (i>0){
+		startList = startList->next;
+		i--;
+	}
+	removeFromList(startList);
 }
 
 static struct cchainedList* auxRemove(struct cchainedList*list , int diff){
@@ -123,4 +126,16 @@ static struct cchainedList* auxRemove(struct cchainedList*list , int diff){
 	} else {
 		return auxRemove(list->next, diff-1);
 	}
+}
+
+void removeValue(struct cchainedList* list, int value){
+	if (value<0){
+		printf("Arf ! \n");
+		exit(1);
+	}
+	struct cchainedList* startList = goToStart(list);
+	while (startList->value != value){
+		startList = startList->next;
+	}
+	removeFromList(startList);
 }
