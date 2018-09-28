@@ -42,10 +42,16 @@ void menu() {
 
 void displayMenu() {
 	printf("\n===== Menu =====\n\n");
-	printf("1. CreateGraph \n");
-	printf("2. LoadGraph \n");
-	printf("3. AddNodes \n");
-	printf("4. AddEdges \n");
+	if (g.nbMaxNodes == NULL) {
+		printf("1. CreateGraph \n");
+		printf("2. LoadGraph \n");
+	} else {
+		printf("3. AddNodes \n");
+		printf("4. AddEdges \n");
+		printf("8. DestroyGraph \n");
+	}
+	printf("9. Exit \n");
+
 }
 
 void createGraph(int maxNodes, bool directed) {
