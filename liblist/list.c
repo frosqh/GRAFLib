@@ -7,21 +7,14 @@ int main(int argc, char* argv){
 	addToStart(list, 5);
 	addToStart(list, 6);
 	addToEnd(list, 13,9);
-	struct cchainedList secondList;
-	secondList = *(list->next);
-	addToStart(&secondList,9);
-	removeIndex(secondList.next,3);
+	struct cchainedList *secondList = list->next;
+	addToStart(secondList,9);
+	removeIndex(list,2);
 	printf("1st : %d\n",list->value);
-	printf("2nd : %d\n",secondList.value);
-	printf("3rd : %d\n",secondList.next->value);
-	printf("4th : %d\n",secondList.next->next->value);
-	printf("5th : %d/%d\n",secondList.next->next->next->value,secondList.next->next->next->secondValue);
-	printf("6th : %d\n",secondList.next->next->next->next->value);
-	printf("7th : %d\n",secondList.next->next->next->next->next->value);
+	printf("2nd : %d\n",secondList->value);
 	printf("Last : %d\n",list->prev->value);
-	printf("Start : %d\n",goToStart(&secondList)->next->value);
-
-
+	printf("Start : %d\n",goToStart(list)->next->value);
+	freeList(list);
 }
 
 void base_addToEnd(struct cchainedList* list, int value, int secondValue){
@@ -40,6 +33,19 @@ void base_addToEnd(struct cchainedList* list, int value, int secondValue){
 	newList->next = list;
 	(list->prev)->next = newList;
 	list->prev = newList;
+}
+
+void freeList(struct cchainedList* list){
+	list = goToStart(list)->prev;
+	while (list->value != -1){
+		printf("%d\n",list->value);
+		struct cchainedList* tmpList = list->prev;
+		free(list);
+		printf("Done");
+		list = tmpList;
+	}
+	printf("%d\n",list->value);
+	free(list);
 }
 
 
@@ -100,7 +106,7 @@ void removeFromList(struct cchainedList* list){
 		printf("Whoops\n");
 		exit(2);
 	}
-	
+
 	list->prev->next = list->next;
 	list->next->prev = list->prev;
 	free(list);

@@ -17,6 +17,7 @@ typedef struct {
 //void addToEnd(struct cchainedList* list, int value);
 void var_addToEnd(values in);
 void var_addToStart(values in);
+void freeList(struct cchainedList* list);
 //void addToStart(struct cchainedList* list, int value);
 void base_addToEnd(struct cchainedList* list, int value, int secondValue);
 void base_addToStart(struct cchainedList* list, int value, int secondValue);
