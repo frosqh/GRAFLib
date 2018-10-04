@@ -23,13 +23,14 @@ void menu() {
 			case 2:
 				break;
 			case 3:
-				for (int i = 0; i < g.nbMaxNodes; ++i) {
+				/*for (int i = 0; i < g.nbMaxNodes; ++i) {
 					printf("numNode\n");
 					fgets(val, 50, stdin);
 					printf("valNode\n");
 					fgets(val2, 50, stdin);
 					base_addToStart(g.list, atoi(val), atoi(val2));
-				}
+				}*/
+
 				break;
 
 			default:
@@ -57,6 +58,7 @@ void displayMenu() {
 void createGraph(int maxNodes, bool directed) {
 	g.isDirected = directed;
 	g.nbMaxNodes = maxNodes;
-	g.list = newChainedList();
+	g.list = malloc(maxNodes * sizeof(struct cchainedList));
+	for (int i = 0; i < maxNodes; ++i) g.list[i] = newChainedList();
 }
 

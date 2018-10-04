@@ -12,7 +12,7 @@ struct Graph g;
 struct Graph {
 	bool isDirected;
 	int nbMaxNodes;
-	struct cchainedList *list;
+	struct cchainedList *list[];
 };
 
 void createGraph(int maxNodes, bool directed);
