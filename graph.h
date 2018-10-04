@@ -9,6 +9,9 @@
 
 struct Graph g;
 
+char val[50] = "";
+char val2[50] = "";
+
 struct Graph {
 	bool isDirected;
 	int nbMaxNodes;
@@ -16,6 +19,8 @@ struct Graph {
 };
 
 void createGraph(int maxNodes, bool directed);
+
+void addEdge(int start, int end, int weight);
 
 void menu();
 

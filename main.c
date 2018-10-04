@@ -7,8 +7,7 @@ int main() {
 }
 
 void menu() {
-	char val[50] = "";
-	char val2[50] = "";
+
 	displayMenu();
 	while (fgets(val, 50, stdin) && atoi(val) != 9) {
 		switch (atoi(val)) {
@@ -23,27 +22,21 @@ void menu() {
 			case 2:
 				break;
 			case 3:
-				/*printf("Start numNode\n");
+				printf("numNode\n");
 				fgets(val, 50, stdin);
-				while(atoi(val) != -1) {
-					int start = atoi(val);
+				while (atoi(val) != -1) {
+					g.list[atoi(val)] = newChainedList();
+					printf("Node %i added\n", atoi(val));
 
-					printf("End numNode\n");
+					printf("numNode (-1 to menu)\n");
 					fgets(val, 50, stdin);
-
-					printf("Weight\n");
-					fgets(val2, 50, stdin);
-					base_addToStart(g.list[start], atoi(val), atoi(val2));
-
-					printf("Start numNode (-1 to menu)\n");
-					fgets(val, 50, stdin);
-				}*/
+				}
 				break;
 			case 4:
 				printf("Start numNode\n");
 				fgets(val, 50, stdin);
 
-				while(atoi(val) != -1) {
+				while (atoi(val) != -1) {
 					int start = atoi(val);
 
 					printf("End numNode\n");
@@ -52,16 +45,8 @@ void menu() {
 
 					printf("Weight\n");
 					fgets(val2, 50, stdin);
-					base_addToStart(g.list[start], end, atoi(val2));
 
-					if (g.isDirected) {
-						printf("Symmetric ? y or n\n");
-						fgets(val, 50, stdin);
-						if (strcmp(val, "y") == 0) {
-							printf("ok\n");
-							base_addToStart(g.list[end], start, atoi(val2));
-						}
-					}
+					addEdge(start, end, atoi(val2));
 
 					printf("Start numNode (-1 to menu)\n");
 					fgets(val, 50, stdin);
@@ -93,6 +78,27 @@ void createGraph(int maxNodes, bool directed) {
 	g.isDirected = directed;
 	g.nbMaxNodes = maxNodes;
 	g.list = malloc(maxNodes * sizeof(struct cchainedList));
-	for (int i = 0; i < maxNodes; ++i) g.list[i] = newChainedList();
+	//for (int i = 0; i < maxNodes; ++i) g.list[i] = newChainedList();
+}
+
+void addEdge(int start, int end, int weight) {
+	if (g.list[start] == NULL || g.list[end] == NULL) {
+		printf("Error, node not previously added\n");
+		return;
+	}
+
+	base_addToStart(g.list[start], end, weight);
+
+	if (g.isDirected) {
+		printf("Symmetric ? y or n\n");
+		fgets(val, 50, stdin);
+		if (strcmp(val, "y") == 0) {
+			printf("ok\n");
+			printf("Weight for %i to %i\n", end, start);
+			fgets(val2, 50, stdin);
+			base_addToStart(g.list[end], start, atoi(val2));
+		}
+	}
+
 }
 
