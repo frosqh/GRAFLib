@@ -23,16 +23,50 @@ void menu() {
 			case 2:
 				break;
 			case 3:
-				/*for (int i = 0; i < g.nbMaxNodes; ++i) {
-					printf("numNode\n");
+				/*printf("Start numNode\n");
+				fgets(val, 50, stdin);
+				while(atoi(val) != -1) {
+					int start = atoi(val);
+
+					printf("End numNode\n");
 					fgets(val, 50, stdin);
-					printf("valNode\n");
+
+					printf("Weight\n");
 					fgets(val2, 50, stdin);
-					base_addToStart(g.list, atoi(val), atoi(val2));
+					base_addToStart(g.list[start], atoi(val), atoi(val2));
+
+					printf("Start numNode (-1 to menu)\n");
+					fgets(val, 50, stdin);
 				}*/
-
 				break;
+			case 4:
+				printf("Start numNode\n");
+				fgets(val, 50, stdin);
 
+				while(atoi(val) != -1) {
+					int start = atoi(val);
+
+					printf("End numNode\n");
+					fgets(val, 50, stdin);
+					int end = atoi(val);
+
+					printf("Weight\n");
+					fgets(val2, 50, stdin);
+					base_addToStart(g.list[start], end, atoi(val2));
+
+					if (g.isDirected) {
+						printf("Symmetric ? y or n\n");
+						fgets(val, 50, stdin);
+						if (strcmp(val, "y") == 0) {
+							printf("ok\n");
+							base_addToStart(g.list[end], start, atoi(val2));
+						}
+					}
+
+					printf("Start numNode (-1 to menu)\n");
+					fgets(val, 50, stdin);
+				}
+				break;
 			default:
 			case 9 :
 				exit(EXIT_SUCCESS);
