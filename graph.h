@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
-#include "liblist/list.h"
+#include "list.h"
 
 #ifndef TP2GRAPH_GRAPH_H
 #define TP2GRAPH_GRAPH_H

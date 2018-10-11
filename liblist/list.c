@@ -15,21 +15,11 @@
 
 #include "list.h"
 
-#define addToEnd(...) var_addToEnd((values){__VA_ARGS__});
 #define addToStart(...) var_addToStart((values){__VA_ARGS__});
+#define addToEnd(...) var_addToStart((values){__VA_ARGS__});
 
-/*int main(int argc, char* argv){
+/*int main(){
 	struct cchainedList* list = newChainedList();
-	addToStart(list, 5);
-	addToStart(list, 6);
-	addToEnd(list, 13,9);
-	struct cchainedList *secondList = list->next;
-	addToStart(secondList, 9);
-	removeIndex(list, 2);
-	printf("1st : %d\n", list->value);
-	printf("2nd : %d\n", secondList->value);
-	printf("Last : %d\n", list->prev->value);
-	printf("Start : %d\n", goToStart(list)->next->value);
 	freeList(list);
 }*/
 
@@ -66,8 +56,8 @@ struct cchainedList* newChainedList(){
 *
 * Retour : 3 si list est NULL, 4 si value est -1 ou 0 si l'ajout s'est déroulé sans accroc.
 *
-* Description : Ajoute un élément passé en à la fin de la liste passé en paramètre,
-*				i.e avant l'élément pointé par list.
+* Description : Ajoute un élément passé en paramètre à la fin de la liste passé en paramètre,
+*				i.e avant l'élément pointé par list.prev.
 *
 */
 int base_addToEnd(struct cchainedList* list, int value, int secondValue){
@@ -94,11 +84,13 @@ int base_addToEnd(struct cchainedList* list, int value, int secondValue){
 /*
 * Fonction : var_addToEnd
 *
-* Parametres : values in, 
+* Parametres : values in, une structure composée des attributs struct cchainedList* list, int value et int secondValue
+*			   afin de gérer des paramètres par défaut
 *
-* Retour : rien
+* Retour : 3 si list est NULL, 4 si value est -1 ou 0 si l'ajout s'est déroulé sans accroc.
 *
-* Description : cette fonction n’existe pas.
+* Description : Ajoute un élément passé en paramètre à la fin de la liste passé en paramètre,
+*				i.e avant l'élément pointé par list.prev.
 *
 */
 int var_addToEnd(values in){
@@ -110,6 +102,19 @@ int var_addToEnd(values in){
 }
 
 
+/*
+* Fonction : base_addToStart
+*
+* Parametres : struct cchainedList* list, pointeur vers un élément de la liste chaînée (non NULL).
+* 			   int value, la valeur de l'élément à ajouter (différent de -1).
+*			   int secondValue, la seconde valeur de l'élément à ajouter.
+*
+* Retour : 3 si list est NULL, 4 si value est -1 ou 0 si l'ajout s'est déroulé sans accroc.
+*
+* Description : Ajoute un élément passé en paramètre au début de la liste passé en paramètre,
+*				i.e avant l'élément pointé par list.next
+*
+*/
 int base_addToStart(struct cchainedList* list, int value, int secondValue){
 	if (list==NULL) {
 		return 3;
@@ -131,6 +136,18 @@ int base_addToStart(struct cchainedList* list, int value, int secondValue){
 }
 
 
+/*
+* Fonction : var_addToStart
+*
+* Parametres : values in, une structure composée des attributs struct cchainedList* list, int value et int secondValue
+*			   afin de gérer des paramètres par défaut
+*
+* Retour : 3 si list est NULL, 4 si value est -1 ou 0 si l'ajout s'est déroulé sans accroc.
+*
+* Description : Ajoute un élément passé en paramètre à la fin de la liste passé en paramètre,
+*				i.e avant l'élément pointé par list.next.
+*
+*/
 int var_addToStart(values in){
 	int value_out = in.value ? in.value : -1;
 	int secondValue_out = in.secondValue ? in.secondValue : -1;
@@ -140,11 +157,31 @@ int var_addToStart(values in){
 }
 
 
+/*
+* Fonction : goToStart
+*
+* Parametres : struct cchainedList* list, pointeur vers la liste à "rembobiner"
+*
+* Retour : struct cchainedList*, pointeur sur la sentinelle de la liste passée en paramètre.
+*
+* Description : Permet de retrouver la sentinelle d'une liste.
+*
+*/
 struct cchainedList* goToStart(struct cchainedList* list){
 	return list->value == -1 ? list : goToStart(list->next);
 }
 
 
+/*
+* Fonction : freeList
+*
+* Parametres : struct cchainedList* list, pointeur vers la liste à libérer
+*
+* Retour : 0 si le free s'est déroulé correctement
+*
+* Description : Libère la liste spécifiée en mémoire, en libérant chacun de ses éléménts.
+*
+*/
 int freeList(struct cchainedList* list){
 	list = goToStart(list)->prev;
 
@@ -160,6 +197,17 @@ int freeList(struct cchainedList* list){
 }
 
 
+/*
+* Fonction : removeFromList
+*
+* Parametres : struct cchainedList* list, pointeur vers l'élement de la liste à supprimer
+*
+* Retour : 0 si la suppression s'est bien déroulée
+*
+* Description : Supprime un élément de la list, en liant les element.next.prev et element.prev.next,
+*				et en libérant de la mémoire l'élément.
+*
+*/
 int removeFromList(struct cchainedList* list){
 	if (list->value == -1) {
 		return 2;
@@ -173,6 +221,17 @@ int removeFromList(struct cchainedList* list){
 }
 
 
+/*
+* Fonction : removeValue
+*
+* Parametres : struct cchainedList* list, pointeur vers la liste dont un élément est à supprimer
+*			   int value, la valeur de l'élément à supprimer
+*
+* Retour : 1 si la valeur spécifiée est négative, 0 si la suppression se déroule sans incidents.
+*
+* Description : Supprime l'élément de valeur donnée de la liste.
+*
+*/
 int removeValue(struct cchainedList* list, int value){
 	if (value < 0) {
 		return 1;
@@ -190,6 +249,17 @@ int removeValue(struct cchainedList* list, int value){
 }
 
 
+/*
+* Fonction : removeIndex
+*
+* Parametres : struct cchainedList* list, pointeur vers la liste dont un élément est à supprimer
+*			   int i, l'index de l'élément à supprimer.
+*
+* Retour : 1 si l'index spécifié est négativ, 0 si la suppression se déroule sans incidents.
+*
+* Description : Supprime l'élément d'index donné de la liste.
+*
+*/
 int removeIndex(struct cchainedList* list, int i){
 	if (i < 0) {
 		return 1;
