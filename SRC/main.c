@@ -20,6 +20,7 @@ void menu() {
 				printf("Graph G with %i max nodes, %sdirected created \n", g.nbMaxNodes, g.isDirected ? "" : "no ");
 				break;
 			case 2:
+				loadGraphFromString("testFile");
 				break;
 			case 3:		// Add Nodes
 				printf("numNode\n");
