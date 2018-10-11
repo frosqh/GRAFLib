@@ -25,6 +25,16 @@ int addEdge(struct Graph g, int start, int end, int weight) {
 	return base_addToStart(g.list[start], end, weight);
 }
 
+int removeNode(struct Graph g, int numnode) {
+	if (g.list[numnode] == NULL) return -1;
+
+	for (int node = 0; node < g.nbMaxNodes; ++node)
+		if (node != NULL && node != numnode)
+			removeEdge(g, node, numnode);
+
+	return freeList(g.list[numnode]);
+}
+
 int removeEdge(struct Graph g, int start, int end) {
 	if (g.list[start] == NULL) {
 		printf("Error, node (and edge) not exist\n");

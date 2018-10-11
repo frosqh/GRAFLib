@@ -16,4 +16,8 @@ int addNode(struct Graph g, int numnode);
 
 int addEdge(struct Graph g, int start, int end, int weight);
 
+int removeNode(struct Graph g, int numnode);
+
+int removeEdge(struct Graph g, int start, int end);
+
 #endif //TP2GRAPH_GRAPH_H

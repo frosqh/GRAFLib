@@ -73,7 +73,22 @@ void menu() {
 					fgets(val, 50, stdin);
 				}
 				break;
-			case 6:		// Remove Edges
+			case 5:			//Remove Nodes
+				printf("numNode\n");
+				fgets(val, 50, stdin);
+				while (atoi(val) != -1) {
+					int ret = removeNode(g, atoi(val));
+					if (ret == 0) {
+						printf("Node %i removed\n", atoi(val));
+					} else if (ret == -1){
+						printf("Error, node doesn't exist\n");
+					}
+
+					printf("numNode (-1 to menu)\n");
+					fgets(val, 50, stdin);
+				}
+				break;
+			case 6:        // Remove Edges
 				printf("Start numNode\n");
 				fgets(val, 50, stdin);
 
@@ -84,9 +99,12 @@ void menu() {
 					fgets(val, 50, stdin);
 					int end = atoi(val);
 
+					removeEdge(g, start, end);
 
-
+					printf("Start numNode (-1 to menu)\n");
+					fgets(val, 50, stdin);
 				}
+				break;
 			default:
 			case 9 :
 				exit(EXIT_SUCCESS);
@@ -103,6 +121,7 @@ void displayMenu() {
 	} else {
 		printf("3. AddNodes \n");
 		printf("4. AddEdges \n");
+		printf("5. RemoveNodes \n");
 		printf("6. RemoveEdges \n");
 		printf("8. DestroyGraph \n");
 	}
