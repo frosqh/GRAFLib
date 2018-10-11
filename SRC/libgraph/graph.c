@@ -47,3 +47,39 @@ int removeEdge(struct Graph g, int start, int end) {
 int deleteGraph() {
 
 }
+
+struct Graph loadGraphFromString(char* file){
+	char buff[1024];
+	int c;
+	int index = 0;
+	int step = 0;
+	int maxNode = -1;
+	bool directed = false;
+	struct cchainedList **lists;
+	FILE *f = fopen(file,"r");
+	if (!f) exit(EXIT_FAILURE);
+	while ((c = fgetc(f)) != EOF){
+		if (c!='\n'){
+			buff[index] = c;
+			index++;
+		} else {
+			buff[index] = '\0';
+			index =0;
+			if (buff[0] != '#'){
+				switch (step){
+					case 0:
+						maxNode = atoi(buff);
+						step++;
+						break;
+					case 1:
+						if (!strcmp("n",buff)) directed = false;
+						else if (!strcmp("y",buff)) directed = true;
+						else exit(EXIT_FAILURE);
+						step++;
+				}
+			}
+		}
+	}
+	printf("%d\n",maxNode);
+	printf("%d\n",directed);	
+}

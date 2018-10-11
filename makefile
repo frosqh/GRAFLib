@@ -2,7 +2,7 @@ OBJS = OBJ/list.o OBJ/graf.o
 
 BIN/graf : SRC/main.c SRC/menu.h LIB/libiblist.a LIB/libibgraph.a#Ne recompile la librairie que si elle a été modifiée
 	@echo "Compiling program ..."
-	gcc -o BIN/graf SRC/main.c -L LIB/ -libgraph -liblist -ISRC/liblist -ISRC/libgraph
+	gcc -o BIN/graf SRC/main.c -LLIB/ -libgraph -liblist -ISRC/liblist -ISRC/libgraph
 
 LIB/libibgraph.a : SRC/libgraph/graph.c SRC/libgraph/graph.h
 	@echo "Compiling libgraph ..."
@@ -18,8 +18,8 @@ LIB/libiblist.a : SRC/liblist/list.c SRC/liblist/list.h
 
 clean : 
 	@echo "Deleting .o files ..."
-	@rm OBJ/*
+	@rm OBJ/*.o
 	@echo "Deleting .a files ..."
-	@rm LIB/*
+	@rm LIB/*.a
 	@echo "Deleting bin file ..."
-	@rm BIN/*
+	@rm BIN/graf
