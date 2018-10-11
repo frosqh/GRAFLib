@@ -1,5 +1,5 @@
 #include "menu.h"
-/*resolved*/
+
 int main() {
 	printf("Hello, World!\n");
 	menu();
