@@ -16,3 +16,7 @@ int addEdge(int start, int end, int weight) {
 	return base_addToStart(g.list[start], end, weight);
 
 }
+
+int deleteGraph() {
+
+}

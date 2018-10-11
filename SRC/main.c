@@ -16,23 +16,26 @@ void menu() {
 				fgets(val, 50, stdin);
 				printf("0 No directed, 1 Directed\n");
 				fgets(val2, 50, stdin);
-				createGraph(atoi(val), atoi(val2) == 0 ? false : true);
+				createGraph(atoi(val), atoi(val2) != 0);
 				printf("Graph G with %i max nodes, %sdirected created \n", g.nbMaxNodes, g.isDirected ? "" : "no ");
 				break;
 			case 2:
 				break;
-			case 3:
+			case 3:		// Add Nodes
 				printf("numNode\n");
 				fgets(val, 50, stdin);
 				while (atoi(val) != -1) {
-					g.list[atoi(val)] = newChainedList();
-					printf("Node %i added\n", atoi(val));
-
+					if (atoi(val) < g.nbMaxNodes) {
+						g.list[atoi(val)] = newChainedList();
+						printf("Node %i added\n", atoi(val));
+					} else {
+						printf("Error to added node n°%i, Graph G as %i max nodes\n", atoi(val), g.nbMaxNodes);
+					}
 					printf("numNode (-1 to menu)\n");
 					fgets(val, 50, stdin);
 				}
 				break;
-			case 4:
+			case 4:		// Add Edges
 				printf("Start numNode\n");
 				fgets(val, 50, stdin);
 
@@ -47,7 +50,7 @@ void menu() {
 					fgets(val2, 50, stdin);
 
 					if (addEdge(start, end, atoi(val2)) == 0) {
-						if (g.isDirected) {
+						if (!g.isDirected) {
 							printf("Symmetric ? y or n\n");
 							fgets(val, 50, stdin);
 							if (strcmp(val, "y") == 0) {
@@ -56,9 +59,12 @@ void menu() {
 								fgets(val2, 50, stdin);
 								addEdge(end, start, atoi(val2));
 							}
+						} else {
+							printf("Weight for %i to %i\n", end, start);
+							fgets(val2, 50, stdin);
+							addEdge(end, start, atoi(val2));
 						}
 					}
-
 
 
 					printf("Start numNode (-1 to menu)\n");
