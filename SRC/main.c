@@ -16,7 +16,7 @@ void menu() {
 				fgets(val, 50, stdin);
 				printf("0 No directed, 1 Directed\n");
 				fgets(val2, 50, stdin);
-				createGraph(atoi(val), atoi(val2) != 0);
+				g = createGraph(atoi(val), atoi(val2) != 0);
 				printf("Graph G with %i max nodes, %sdirected created \n", g.nbMaxNodes, g.isDirected ? "" : "no ");
 				break;
 			case 2:
