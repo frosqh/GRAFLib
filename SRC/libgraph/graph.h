@@ -12,6 +12,8 @@ struct Graph {
 
 struct Graph createGraph(int maxNodes, bool directed);
 
+int addNode(struct Graph g, int numnode);
+
 int addEdge(struct Graph g, int start, int end, int weight);
 
 #endif //TP2GRAPH_GRAPH_H

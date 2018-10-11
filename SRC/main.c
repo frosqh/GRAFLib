@@ -25,12 +25,15 @@ void menu() {
 				printf("numNode\n");
 				fgets(val, 50, stdin);
 				while (atoi(val) != -1) {
-					if (atoi(val) < g.nbMaxNodes) {
-						g.list[atoi(val)] = newChainedList();
+					int ret = addNode(g, atoi(val));
+					if (ret == 0) {
 						printf("Node %i added\n", atoi(val));
+					} else if (ret == -1){
+						printf("Error, node is already added\n");
 					} else {
 						printf("Error to added node n°%i, Graph G as %i max nodes\n", atoi(val), g.nbMaxNodes);
 					}
+
 					printf("numNode (-1 to menu)\n");
 					fgets(val, 50, stdin);
 				}
@@ -65,7 +68,6 @@ void menu() {
 							addEdge(g, end, start, atoi(val2));
 						}
 					}
-
 
 					printf("Start numNode (-1 to menu)\n");
 					fgets(val, 50, stdin);
