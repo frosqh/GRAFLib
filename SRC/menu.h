@@ -10,6 +10,8 @@
 char val[50] = "";
 char val2[50] = "";
 
+struct Graph g;
+
 void menu();
 
 void displayMenu();

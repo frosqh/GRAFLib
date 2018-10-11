@@ -49,7 +49,7 @@ void menu() {
 					printf("Weight\n");
 					fgets(val2, 50, stdin);
 
-					if (addEdge(start, end, atoi(val2)) == 0) {
+					if (addEdge(g, start, end, atoi(val2)) == 0) {
 						if (!g.isDirected) {
 							printf("Symmetric ? y or n\n");
 							fgets(val, 50, stdin);
@@ -57,12 +57,12 @@ void menu() {
 								printf("ok\n");
 								printf("Weight for %i to %i\n", end, start);
 								fgets(val2, 50, stdin);
-								addEdge(end, start, atoi(val2));
+								addEdge(g, end, start, atoi(val2));
 							}
 						} else {
 							printf("Weight for %i to %i\n", end, start);
 							fgets(val2, 50, stdin);
-							addEdge(end, start, atoi(val2));
+							addEdge(g, end, start, atoi(val2));
 						}
 					}
 
@@ -71,6 +71,20 @@ void menu() {
 					fgets(val, 50, stdin);
 				}
 				break;
+			case 6:		// Remove Edges
+				printf("Start numNode\n");
+				fgets(val, 50, stdin);
+
+				while (atoi(val) != -1) {
+					int start = atoi(val);
+
+					printf("End numNode\n");
+					fgets(val, 50, stdin);
+					int end = atoi(val);
+
+
+
+				}
 			default:
 			case 9 :
 				exit(EXIT_SUCCESS);
@@ -87,6 +101,7 @@ void displayMenu() {
 	} else {
 		printf("3. AddNodes \n");
 		printf("4. AddEdges \n");
+		printf("6. RemoveEdges \n");
 		printf("8. DestroyGraph \n");
 	}
 	printf("9. Exit \n");
