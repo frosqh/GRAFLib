@@ -51,7 +51,6 @@ int deleteGraph(struct Graph *g) {
 }
 
 int freeGraph(struct Graph g){
-	printf("Plop ! ");
 	int i;
 	printf("%d\n",g.nbMaxNodes);
 	for(i=0;i<g.nbMaxNodes;i++){
@@ -65,6 +64,7 @@ int freeGraph(struct Graph g){
 }
 
 struct Graph loadGraphFromString(char* file){
+	printf("WARNING : Any non-conform file will provoke unspecified behavior")
 	char buff[1024];
 	char buffnd[16];
 	char buffrd[16];
@@ -78,8 +78,12 @@ struct Graph loadGraphFromString(char* file){
 	bool directed = false;
 	bool oneLast = true;
 	struct Graph g;
+	printf("%s\n",file);
 	FILE *f = fopen(file,"r");
-	if (!f) exit(EXIT_FAILURE);
+	if (!f){
+		printf("Error : File not found ! \n");
+		return g;
+	}
 	bool cont = (c=fgetc(f))!=EOF;
 	while (cont){
 		if (c!='\n' && oneLast){
@@ -154,50 +158,7 @@ struct Graph loadGraphFromString(char* file){
 		} else {
 			cont = false;
 		}
-	}/*
-	buff[index] = '\0';
-	for (int k = 0;k<10;k++){
-				buff[index+k]='\0';
 	}
-	i=0;
-	while(buff[i]!=':'){
-		buffnd[i]=buff[i];
-		i++;
-	}
-	buffnd[i]='\0';
-	node = atoi(buffnd);
-	addNode(g, node);
-	while(buff[i] != 0){
-		sE=false;
-		i++;
-		i++;
-		i++;
-		j=0;
-		printf("%c\n",buff[i]);
-		while (buff[i]!=')'){
-			if (!sE){
-				if (buff[i] != '/'){
-					buffnd[j] = buff[i];
-					j++;
-				}
-				else{
-					buffnd[j] = '\0';
-				 	sE = true;
-				 	j = 0;
-				}
-				i++;
-
-			} else {
-				buffrd[j]=buff[i];
-				i++;
-				j++; 
-			}
-		}
-		buffrd[j] = '\0';
-		addNode(g, atoi(buffnd));
-		addEdge(g, node, atoi(buffnd), atoi(buffrd));
-		i++;
-	}*/
 	return g;
 }
 
@@ -253,9 +214,6 @@ void graphToString(struct Graph g,char* str){
 			}
 			currentIndex--;
 			currentIndex--;
-
-
-
 			str[currentIndex++] = '\n';
 		}
 	}

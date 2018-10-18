@@ -20,7 +20,10 @@ void menu() {
 				printf("Graph G with %i max nodes, %sdirected created \n", g.nbMaxNodes, g.isDirected ? "" : "no ");
 				break;
 			case 2:
-				g = loadGraphFromString("testFile");
+				printf("From which file ? \n");
+				fgets(val, 50, stdin);
+				val[strcspn(val, "\n")] = 0;
+				g = loadGraphFromString(val);
 				break;
 			case 3:        // Add Nodes
 				printf("numNode\n");
