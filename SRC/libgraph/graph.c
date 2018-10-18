@@ -39,8 +39,16 @@ int removeEdge(struct Graph g, int start, int end) {
 	return removeValue(g.list[start], end);
 }
 
-int deleteGraph(struct Graph g) {
-
+int deleteGraph(struct Graph *g) {
+	if (g == NULL) return -1;
+	if (g->list != NULL) {
+		for (int node = 0; node < g->nbMaxNodes; ++node)
+			if (g->list[node] != NULL) freeList(g->list[node]);
+	}
+	g->isDirected = NULL;
+	g->nbMaxNodes = NULL;
+	free(g->list);
+	return 0;
 }
 
 int freeGraph(struct Graph g){

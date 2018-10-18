@@ -57,7 +57,7 @@ void menu() {
 						if (g.isDirected) {
 							printf("Symmetric ? y or n\n");
 							fgets(val, 50, stdin);
-							if (strcmp(val, "y") == 0) {
+							if (strcmp(val, "y\n") == 0) {
 								printf("ok\n");
 								printf("Weight for %i to %i\n", end, start);
 								fgets(val2, 50, stdin);
@@ -114,12 +114,11 @@ void menu() {
 			case 8:
 				printf("Delete Graph, are you sure ? y or n\n");
 				fgets(val, 50, stdin);
-				if (strcmp(val, "y") == 0) {
-					printf("ok\n");
-					int ret = deleteGraph(g);
-					if (ret == 0)
+				if (strcmp(val, "y\n") == 0) {
+					int ret = deleteGraph(&g);
+					if (ret == 0) {
 						printf("Graph deleted\n");
-					else
+					} else
 						printf("Error");
 				}
 				break;

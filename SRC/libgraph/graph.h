@@ -35,7 +35,7 @@ int removeNode(struct Graph g, int numnode);
 
 int removeEdge(struct Graph g, int start, int end);
 
-int deleteGraph(struct Graph g);
+int deleteGraph(struct Graph *g);
 
 void graphToString(struct Graph g, char* str);
 
