@@ -16,4 +16,6 @@ void menu();
 
 void displayMenu();
 
+int addEdgeDispError(struct Graph g, int start, int end, int weight);
+
 #endif //TP2GRAPH_MENU_H

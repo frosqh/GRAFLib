@@ -53,7 +53,7 @@ void menu() {
 					printf("Weight\n");
 					fgets(val2, 50, stdin);
 
-					if (addEdge(g, start, end, atoi(val2)) == 0) {
+					if (addEdgeDispError(g, start, end, atoi(val2)) == 0) {
 						if (!g.isDirected) {
 							printf("Symmetric ? y or n\n");
 							fgets(val, 50, stdin);
@@ -61,12 +61,12 @@ void menu() {
 								printf("ok\n");
 								printf("Weight for %i to %i\n", end, start);
 								fgets(val2, 50, stdin);
-								addEdge(g, end, start, atoi(val2));
+								addEdgeDispError(g, end, start, atoi(val2));
 							}
 						} else {
-							printf("Weight for %i to %i\n", end, start);
+							printf("Weight for %i --(?)--> %i\n", end, start);
 							fgets(val2, 50, stdin);
-							addEdge(g, end, start, atoi(val2));
+							addEdgeDispError(g, end, start, atoi(val2));
 						}
 					}
 
@@ -130,3 +130,15 @@ void displayMenu() {
 
 }
 
+
+int addEdgeDispError(struct Graph g, int start, int end, int weight){
+	int ret = addEdge(g, end, start, atoi(val2));
+	if (ret == 0) {
+		printf("Edge %i --(%i)--> %i added\n", start, atoi(val2), end);
+	} else if (ret == -1){
+		printf("Error, node(s) not previously added\n");
+	} else {
+		printf("Error incorrect node\n");
+	}
+	return ret;
+}

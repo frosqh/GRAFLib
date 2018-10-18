@@ -17,10 +17,8 @@ int addNode(struct Graph g, int numnode) {
 }
 
 int addEdge(struct Graph g, int start, int end, int weight) {
-	if (g.list[start] == NULL || g.list[end] == NULL) {
-		printf("Error, node not previously added\n");
+	if (g.list[start] == NULL || g.list[end] == NULL)
 		return -1;
-	}
 
 	return base_addToStart(g.list[start], end, weight);
 }
