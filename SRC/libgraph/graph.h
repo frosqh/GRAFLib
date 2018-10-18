@@ -14,6 +14,7 @@
 #include "../liblist/list.h"
 
 #ifndef TP2GRAPH_GRAPH_H
+#define SIZE 1024
 #define TP2GRAPH_GRAPH_H
 
 struct Graph {
@@ -35,5 +36,9 @@ int removeNode(struct Graph g, int numnode);
 int removeEdge(struct Graph g, int start, int end);
 
 int deleteGraph(struct Graph g);
+
+void graphToString(struct Graph g, char* str);
+
+int freeGraph(struct Graph g);
 
 #endif //TP2GRAPH_GRAPH_H

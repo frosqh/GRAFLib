@@ -20,7 +20,7 @@ void menu() {
 				printf("Graph G with %i max nodes, %sdirected created \n", g.nbMaxNodes, g.isDirected ? "" : "no ");
 				break;
 			case 2:
-				loadGraphFromString("testFile");
+				g = loadGraphFromString("testFile");
 				break;
 			case 3:        // Add Nodes
 				printf("numNode\n");
@@ -123,8 +123,16 @@ void menu() {
 						printf("Error");
 				}
 				break;
+			case 7:
+				;	char* tostr = malloc(g.nbMaxNodes*1024*sizeof(char));
+					graphToString(g, tostr);
+					printf("\n\n%s\n",tostr);
+					getchar();
+					break;
 			default:
 			case 9 :
+				if (g.nbMaxNodes)
+					freeGraph(g);
 				exit(EXIT_SUCCESS);
 		}
 		displayMenu();
@@ -133,7 +141,7 @@ void menu() {
 
 void displayMenu() {
 	printf("\n===== Menu =====\n\n");
-	if (g.nbMaxNodes == NULL) {
+	if (!g.nbMaxNodes) {
 		printf("1. CreateGraph \n");
 		printf("2. LoadGraph \n");
 	} else {
@@ -141,6 +149,7 @@ void displayMenu() {
 		printf("4. AddEdges \n");
 		printf("5. RemoveNodes \n");
 		printf("6. RemoveEdges \n");
+		printf("7. View Graph\n");
 		printf("8. DestroyGraph \n");
 	}
 	printf("9. Exit \n");
