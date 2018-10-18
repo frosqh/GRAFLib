@@ -45,8 +45,7 @@ int deleteGraph(struct Graph *g) {
 		for (int node = 0; node < g->nbMaxNodes; ++node)
 			if (g->list[node] != NULL) freeList(g->list[node]);
 	}
-	g->isDirected = NULL;
-	g->nbMaxNodes = NULL;
+	g->nbMaxNodes = 0;
 	free(g->list);
 	return 0;
 }

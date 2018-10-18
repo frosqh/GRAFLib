@@ -131,7 +131,8 @@ void menu() {
 			default:
 			case 9 :
 				if (g.nbMaxNodes)
-					freeGraph(g);
+					//freeGraph(g);
+					deleteGraph(&g);
 				exit(EXIT_SUCCESS);
 		}
 		displayMenu();
