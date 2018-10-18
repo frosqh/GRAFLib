@@ -22,14 +22,14 @@ void menu() {
 			case 2:
 				loadGraphFromString("testFile");
 				break;
-			case 3:		// Add Nodes
+			case 3:        // Add Nodes
 				printf("numNode\n");
 				fgets(val, 50, stdin);
 				while (atoi(val) != -1) {
 					int ret = addNode(g, atoi(val));
 					if (ret == 0) {
 						printf("Node %i added\n", atoi(val));
-					} else if (ret == -1){
+					} else if (ret == -1) {
 						printf("Error, node is already added\n");
 					} else {
 						printf("Error to added node n°%i, Graph G as %i max nodes\n", atoi(val), g.nbMaxNodes);
@@ -39,7 +39,7 @@ void menu() {
 					fgets(val, 50, stdin);
 				}
 				break;
-			case 4:		// Add Edges
+			case 4:        // Add Edges
 				printf("Start numNode\n");
 				fgets(val, 50, stdin);
 
@@ -54,7 +54,7 @@ void menu() {
 					fgets(val2, 50, stdin);
 
 					if (addEdgeDispError(g, start, end, atoi(val2)) == 0) {
-						if (!g.isDirected) {
+						if (g.isDirected) {
 							printf("Symmetric ? y or n\n");
 							fgets(val, 50, stdin);
 							if (strcmp(val, "y") == 0) {
@@ -64,9 +64,7 @@ void menu() {
 								addEdgeDispError(g, end, start, atoi(val2));
 							}
 						} else {
-							printf("Weight for %i --(?)--> %i\n", end, start);
-							fgets(val2, 50, stdin);
-							addEdgeDispError(g, end, start, atoi(val2));
+							addEdge(g, end, start, atoi(val2));
 						}
 					}
 
@@ -74,14 +72,14 @@ void menu() {
 					fgets(val, 50, stdin);
 				}
 				break;
-			case 5:			//Remove Nodes
+			case 5:            //Remove Nodes
 				printf("numNode\n");
 				fgets(val, 50, stdin);
 				while (atoi(val) != -1) {
 					int ret = removeNode(g, atoi(val));
 					if (ret == 0) {
 						printf("Node %i removed\n", atoi(val));
-					} else if (ret == -1){
+					} else if (ret == -1) {
 						printf("Error, node doesn't exist\n");
 					}
 
@@ -100,10 +98,29 @@ void menu() {
 					fgets(val, 50, stdin);
 					int end = atoi(val);
 
-					removeEdge(g, start, end);
+					int ret = removeEdge(g, start, end);
+					if (ret == -1) {
+						printf("Error, node (and edge) not exist\n");
+					} else if (ret == 0) {
+						printf("Edge removed successful\n");
+					} else {
+						printf("Error");
+					}
 
 					printf("Start numNode (-1 to menu)\n");
 					fgets(val, 50, stdin);
+				}
+				break;
+			case 8:
+				printf("Delete Graph, are you sure ? y or n\n");
+				fgets(val, 50, stdin);
+				if (strcmp(val, "y") == 0) {
+					printf("ok\n");
+					int ret = deleteGraph(g);
+					if (ret == 0)
+						printf("Graph deleted\n");
+					else
+						printf("Error");
 				}
 				break;
 			default:
@@ -131,14 +148,17 @@ void displayMenu() {
 }
 
 
-int addEdgeDispError(struct Graph g, int start, int end, int weight){
-	int ret = addEdge(g, end, start, atoi(val2));
+int addEdgeDispError(struct Graph g, int start, int end, int weight) {
+	int ret = addEdge(g, start, end, weight);
 	if (ret == 0) {
-		printf("Edge %i --(%i)--> %i added\n", start, atoi(val2), end);
-	} else if (ret == -1){
+		if (g.isDirected)
+			printf("Edge %i --(%i)--> %i added\n", start, weight, end);
+		else
+			printf("Edge %i --(%i)-- %i added\n", start, weight, end);
+	} else if (ret == -1) {
 		printf("Error, node(s) not previously added\n");
 	} else {
-		printf("Error incorrect node\n");
+		printf("Error, incorrect node\n");
 	}
 	return ret;
 }

@@ -34,15 +34,12 @@ int removeNode(struct Graph g, int numnode) {
 }
 
 int removeEdge(struct Graph g, int start, int end) {
-	if (g.list[start] == NULL) {
-		printf("Error, node (and edge) not exist\n");
-		return -1;
-	}
+	if (g.list[start] == NULL) return -1;
 
 	return removeValue(g.list[start], end);
 }
 
-int deleteGraph() {
+int deleteGraph(struct Graph g) {
 
 }
 
