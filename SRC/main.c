@@ -20,10 +20,11 @@ void menu() {
 				printf("Graph G with %i max nodes, %sdirected created \n", g.nbMaxNodes, g.isDirected ? "" : "no ");
 				break;
 			case 2:
+				;char path[1024] = "";
 				printf("From which file ? \n");
-				fgets(val, 50, stdin);
-				val[strcspn(val, "\n")] = 0;
-				g = loadGraphFromString(val);
+				fgets(path, 1024, stdin);
+				path[strcspn(path, "\n")] = 0;
+				g = loadGraphFromString(path);
 				break;
 			case 3:        // Add Nodes
 				printf("numNode\n");
@@ -131,8 +132,11 @@ void menu() {
 					printf("\n\n%s\n",tostr);
 					getchar();
 					break;
+			case 9:		// SaveGraph
+
+				break;
 			default:
-			case 9 :
+			case 10 :
 				if (g.nbMaxNodes)
 					//freeGraph(g);
 					deleteGraph(&g);
@@ -154,8 +158,9 @@ void displayMenu() {
 		printf("6. RemoveEdges \n");
 		printf("7. View Graph\n");
 		printf("8. DestroyGraph \n");
+		printf("9. Save Graph \n");
 	}
-	printf("9. Exit \n");
+	printf("10. Exit \n");
 
 }
 

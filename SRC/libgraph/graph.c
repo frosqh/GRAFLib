@@ -64,7 +64,7 @@ int freeGraph(struct Graph g){
 }
 
 struct Graph loadGraphFromString(char* file){
-	printf("WARNING : Any non-conform file will provoke unspecified behavior")
+	printf("WARNING : Any non-conform file will provoke unspecified behavior");
 	char buff[1024];
 	char buffnd[16];
 	char buffrd[16];
@@ -169,17 +169,26 @@ void graphToString(struct Graph g,char* str){
 	sprintf(buffnb, "%d", g.nbMaxNodes);
 	int i = 0;
 	struct cchainedList **lists = g.list;
+	char comment[50] = "# maximum number of nodes\n";
+	memcpy(&str[currentIndex], comment, strlen(comment));
+	currentIndex+=strlen(comment);
 	while(buffnb[i] != 0){
 		str[currentIndex++] = buffnb[i];
 		i++;
 	}
 	str[currentIndex++]='\n';
+	strcpy(comment, "# directed\n");
+	memcpy(&str[currentIndex], comment, strlen(comment));
+	currentIndex+=strlen(comment);
 	if (g.isDirected)
-		str[currentIndex++]='n';
-	else
 		str[currentIndex++]='y';
+	else
+		str[currentIndex++]='n';
 	str[currentIndex++]='\n';
-	for (i = 0; i<g.nbMaxNodes; i++){
+	strcpy(comment, "# node: neighbours\n");
+	memcpy(&str[currentIndex], comment, strlen(comment));
+	currentIndex+=strlen(comment);
+	for (i = 0; i<=g.nbMaxNodes; i++){
 		if (lists[i] != NULL){
 			sprintf(buffnb, "%d", i);
 			int j = 0;
