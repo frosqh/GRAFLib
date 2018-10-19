@@ -63,6 +63,15 @@ int freeGraph(struct Graph g){
 	return 0;
 }
 
+int saveGraphToFile(struct Graph g, char *filename) {
+	char *graph = malloc(g.nbMaxNodes * 1024 * sizeof(char));
+	graphToString(g, graph);
+	FILE *file = fopen(filename, "w");
+	if (fputs(graph, file) == EOF) return -1;
+	free(graph);
+	return fclose(file);
+}
+
 struct Graph loadGraphFromString(char* file){
 	printf("WARNING : Any non-conform file will provoke unspecified behavior");
 	char buff[1024];

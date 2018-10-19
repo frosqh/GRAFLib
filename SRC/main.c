@@ -9,7 +9,7 @@ int main() {
 void menu() {
 
 	displayMenu();
-	while (fgets(val, 50, stdin) && atoi(val) != 9) {
+	while (fgets(val, 50, stdin) && atoi(val) != 10) {
 		switch (atoi(val)) {
 			case 1:
 				printf("Nb max nodes\n");
@@ -19,8 +19,8 @@ void menu() {
 				g = createGraph(atoi(val), atoi(val2) != 0);
 				printf("Graph G with %i max nodes, %sdirected created \n", g.nbMaxNodes, g.isDirected ? "" : "no ");
 				break;
-			case 2:
-				;char path[1024] = "";
+			case 2:;
+				char path[1024] = "";
 				printf("From which file ? \n");
 				fgets(path, 1024, stdin);
 				path[strcspn(path, "\n")] = 0;
@@ -115,6 +115,13 @@ void menu() {
 					fgets(val, 50, stdin);
 				}
 				break;
+			case 7:;
+				char *tostr = malloc(g.nbMaxNodes * 1024 * sizeof(char));
+				graphToString(g, tostr);
+				printf("\n\n%s\n", tostr);
+				free(tostr);
+				getchar();
+				break;
 			case 8:
 				printf("Delete Graph, are you sure ? y or n\n");
 				fgets(val, 50, stdin);
@@ -126,14 +133,16 @@ void menu() {
 						printf("Error");
 				}
 				break;
-			case 7:
-				;	char* tostr = malloc(g.nbMaxNodes*1024*sizeof(char));
-					graphToString(g, tostr);
-					printf("\n\n%s\n",tostr);
-					getchar();
-					break;
-			case 9:		// SaveGraph
-
+			case 9:        // SaveGraph
+				;
+				char filename[1024] = "";
+				printf("Filename and path to save graph :\n");
+				fgets(filename, 1024, stdin);
+				filename[strcspn(filename, "\n")] = 0;
+				if (saveGraphToFile(g, filename) == 0)
+					printf("Graph saved in %s\n", filename);
+				else
+					printf("Error, The graph has not been saved\n");
 				break;
 			default:
 			case 10 :

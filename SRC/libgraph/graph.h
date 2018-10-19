@@ -39,6 +39,8 @@ int deleteGraph(struct Graph *g);
 
 void graphToString(struct Graph g, char* str);
 
+int saveGraphToFile(struct Graph g, char *filename);
+
 int freeGraph(struct Graph g);
 
 #endif //TP2GRAPH_GRAPH_H
