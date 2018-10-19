@@ -1,5 +1,26 @@
+/*
+**********************************************************
+*
+* Programme : graph.c
+*
+* ecrit par : Valentin Bonnal & Gautier Raimondi
+*
+* resume : Fournit une API d'utilisation de graph
+*
+* date : 19/10/2018
+*
+***********************************************************
+*/
+
 #include "graph.h"
 
+/**
+* Crée un graph et le retourne
+ *
+ * @param maxNodes : noeuds max
+ * @param directed : si le graph est orienté
+ * @return : Le graph créé
+ */
 struct Graph createGraph(int maxNodes, bool directed) {
 	struct Graph g;
 	g.isDirected = directed;
@@ -8,6 +29,16 @@ struct Graph createGraph(int maxNodes, bool directed) {
 	return g;
 }
 
+/**
+* Ajout un noeud à un graph
+ *
+ * @param g : Le graph
+ * @param numnode : le noeud à ajouter
+ * @return : 0 si le noeud à bien été ajouté
+ * @return : -1 si le noeud est déjà ajouté
+ * @return : -2 si le numéro du noeud à ajouter
+ * 			 est supérieur au nombre max de noeud du graph
+ */
 int addNode(struct Graph g, int numnode) {
 	if (g.list[numnode] != NULL) return -1;
 	if (numnode > g.nbMaxNodes) return -2;
@@ -16,6 +47,17 @@ int addNode(struct Graph g, int numnode) {
 	return 0;
 }
 
+/**
+* Ajout une arête à un graph
+ *
+ * @param g : Le graph
+ * @param start : le noeud de départ
+ * @param end : le noeud d'arrivé
+ * @param weight : le poids de l'arête
+ * @return : 0 si l'arête à bien été ajoutée
+ * @return : -1 si le noeud de départ ou d'arrivé n'a pas été ajouté au graph
+ * @return : autre, consulter les retours de la fonction "base_addToEnd"
+ */
 int addEdge(struct Graph g, int start, int end, int weight) {
 	if (g.list[start] == NULL || g.list[end] == NULL)
 		return -1;
@@ -23,6 +65,15 @@ int addEdge(struct Graph g, int start, int end, int weight) {
 	return base_addToEnd(g.list[start], end, weight);
 }
 
+/**
+* Supprime le noeud d'un graph et ses arêtes
+ *
+ * @param g : Le graph
+ * @param numnode : le noeud à supprimer
+ * @return : 0 si le noeud à bien été supprimé
+ * @return : -1 si le noeud n'existe pas
+ * @return : autre, consulter les retours de la fonction "freeList"
+ */
 int removeNode(struct Graph g, int numnode) {
 	if (g.list[numnode] == NULL) return -1;
 
@@ -33,12 +84,29 @@ int removeNode(struct Graph g, int numnode) {
 	return freeList(g.list[numnode]);
 }
 
+/**
+* Supprime l'arête d'un graph
+ *
+ * @param g : Le graph
+ * @param start : le noeud de départ
+ * @param end : le noeud d'arrivé
+ * @return : 0 si l'arête à bien été supprimée
+ * @return : -1 si l'arête n'existe pas
+ * @return : autre, consulter les retours de la fonction "removeValue"
+ */
 int removeEdge(struct Graph g, int start, int end) {
 	if (g.list[start] == NULL) return -1;
 
 	return removeValue(g.list[start], end);
 }
 
+/**
+* Supprime un graph, ses arêtes, ses noeuds
+ *
+ * @param g : Le graph
+ * @return : 0 si le graph à bien été supprimé
+ * @return : -1 si le graph n'existe pas
+ */
 int deleteGraph(struct Graph *g) {
 	if (g == NULL) return -1;
 	if (g->list != NULL) {
@@ -50,7 +118,7 @@ int deleteGraph(struct Graph *g) {
 	return 0;
 }
 
-int freeGraph(struct Graph g){
+/*int freeGraph(struct Graph g){
 	int i;
 	printf("%d\n",g.nbMaxNodes);
 	for(i=0;i<g.nbMaxNodes;i++){
@@ -61,8 +129,16 @@ int freeGraph(struct Graph g){
 		}
 	}
 	return 0;
-}
+}*/
 
+/**
+* Sauvegarde un graph dans un fichier
+ *
+ * @param g : Le graph
+ * @param filename : Le nom du fichier et son chemin
+ * @return : 0 si le graph à bien été exporté
+ * @return : EOF si le fichier n'a pas pu être fermé
+ */
 int saveGraphToFile(struct Graph g, char *filename) {
 	char *graph = malloc(g.nbMaxNodes * 1024 * sizeof(char));
 	graphToString(g, graph);
@@ -72,6 +148,12 @@ int saveGraphToFile(struct Graph g, char *filename) {
 	return fclose(file);
 }
 
+/**
+* Charge un graph depuis un fichier
+ *
+ * @param file : Le fichier contenant le graph
+ * @return : Le Graph importé
+ */
 struct Graph loadGraphFromString(char* file){
 	printf("WARNING : Any non-conform file will provoke unspecified behavior");
 	char buff[1024];
@@ -171,7 +253,12 @@ struct Graph loadGraphFromString(char* file){
 	return g;
 }
 
-
+/**
+* Converti un graph sous format de caractères pour visualisation
+ *
+ * @param g : Le graph
+ * @param str : La variable de retour contenant le graph au format texte
+ */
 void graphToString(struct Graph g,char* str){
 	int currentIndex = 0;
 	char buffnb[16];

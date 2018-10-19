@@ -1,7 +1,20 @@
+/*
+**********************************************************
+*
+* Programme : main.c
+*
+* ecrit par : Valentin Bonnal
+*
+* resume : Programme principal mettant à disposition
+* 			un menu d'intéraction sous forme de terminal
+*
+* date : 19/10/2018
+*
+***********************************************************
+*/
 #include "menu.h"
 
 int main() {
-	printf("Hello, World!\n");
 	menu();
 	return 0;
 }
