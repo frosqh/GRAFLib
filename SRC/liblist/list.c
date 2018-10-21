@@ -227,7 +227,7 @@ int removeFromList(struct cchainedList* list){
 * Parametres : struct cchainedList* list, pointeur vers la liste dont un élément est à supprimer
 *			   int value, la valeur de l'élément à supprimer
 *
-* Retour : 1 si la valeur spécifiée est négative, 0 si la suppression se déroule sans incidents.
+* Retour : 2 si la valeur spécifiée n'est pas dans a liste,  1 si la valeur spécifiée est négative, 0 si la suppression se déroule sans incidents.
 *
 * Description : Supprime l'élément de valeur donnée de la liste.
 *
@@ -239,13 +239,16 @@ int removeValue(struct cchainedList* list, int value){
 
 	struct cchainedList* startList = goToStart(list);
 
-	while (startList->value != value){
+	while (startList->value != value && startList->next->value != -1){
 		startList = startList->next;
 	}
 
-	removeFromList(startList);
+	if (startList->value == value){
+		removeFromList(startList);
+		return 0;
+	}
 
-	return 0;
+	return 2;
 }
 
 
@@ -255,7 +258,7 @@ int removeValue(struct cchainedList* list, int value){
 * Parametres : struct cchainedList* list, pointeur vers la liste dont un élément est à supprimer
 *			   int i, l'index de l'élément à supprimer.
 *
-* Retour : 1 si l'index spécifié est négativ, 0 si la suppression se déroule sans incidents.
+* Retour : 1 si l'index spécifié est négatif, 0 si la suppression se déroule sans incidents.
 *
 * Description : Supprime l'élément d'index donné de la liste.
 *
