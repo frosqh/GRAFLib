@@ -169,7 +169,6 @@ struct Graph loadGraphFromString(char* file){
 	bool directed = false;
 	bool oneLast = true;
 	struct Graph g;
-	printf("%s\n",file);
 	FILE *f = fopen(file,"r");
 	if (!f){
 		printf("Error : File not found ! \n");
@@ -186,7 +185,7 @@ struct Graph loadGraphFromString(char* file){
 				buff[index+k]='\0';
 			}
 			index =0;
-			if (buff[0] != '#'){
+			if (buff[0] != '#' && !(buff[0] == ' ' && buff[1] == '\0')){
 				switch (step){
 					case 0:
 						maxNode = atoi(buff);
@@ -285,7 +284,7 @@ void graphToString(struct Graph g,char* str){
 	memcpy(&str[currentIndex], comment, strlen(comment));
 	currentIndex+=strlen(comment);
 	for (i = 0; i<=g.nbMaxNodes; i++){
-		if (lists[i] != NULL){
+		if (lists[i] != NULL && lists[i]->next->value != -1){
 			sprintf(buffnb, "%d", i);
 			int j = 0;
 			while(buffnb[j] != 0){
