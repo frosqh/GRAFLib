@@ -62,7 +62,7 @@ int addEdge(struct Graph g, int start, int end, int weight) {
 	if (g.list[start] == NULL || g.list[end] == NULL)
 		return -1;
 
-	return base_addToEnd(g.list[start], end, weight);
+	return addToEnd(g.list[start], end, weight);
 }
 
 /**

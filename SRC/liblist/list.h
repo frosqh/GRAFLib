@@ -22,6 +22,8 @@
 		int secondValue;
 	} values;
 
+	#define addToStart(...) var_addToStart((values){__VA_ARGS__});
+	#define addToEnd(...) var_addToStart((values){__VA_ARGS__});
 	
 	int var_addToEnd(values in);
 	int var_addToStart(values in);
@@ -33,4 +35,6 @@
 	int removeFromList(struct cchainedList* list);
 	int removeIndex(struct cchainedList* list, int i);
 	int removeValue(struct cchainedList* list, int value);
+
+
 #endif

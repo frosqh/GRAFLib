@@ -15,9 +15,6 @@
 
 #include "list.h"
 
-#define addToStart(...) var_addToStart((values){__VA_ARGS__});
-#define addToEnd(...) var_addToStart((values){__VA_ARGS__});
-
 /*int main(){
 	struct cchainedList* list = newChainedList();
 	freeList(list);
