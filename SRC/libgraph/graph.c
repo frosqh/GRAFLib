@@ -78,7 +78,7 @@ int removeNode(struct Graph g, int numnode) {
 	if (g.list[numnode] == NULL) return -1;
 
 	for (int node = 0; node < g.nbMaxNodes; ++node)
-		if (node != NULL && node != numnode)
+		if (g.list[node] != NULL && node != numnode)
 			removeEdge(g, node, numnode);
 
 	return freeList(g.list[numnode]);

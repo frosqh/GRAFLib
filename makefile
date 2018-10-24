@@ -6,7 +6,7 @@ BIN/graf : SRC/main.c SRC/menu.h LIB/libiblist.a LIB/libibgraph.a#Ne recompile l
 
 LIB/libibgraph.a : SRC/libgraph/graph.c SRC/libgraph/graph.h
 	@echo "Compiling libgraph ..."
-	gcc -o OBJ/graph.o -c SRC/libgraph/graph.c -lm -Wall -Wextra
+	gcc -o OBJ/graph.o -c SRC/libgraph/graph.c -lm -Wall -Wextra -std=c99
 	@ ar rc 	LIB/libibgraph.a OBJ/graph.o
 	@ cp LIB/libibgraph.a ../LIB
 
