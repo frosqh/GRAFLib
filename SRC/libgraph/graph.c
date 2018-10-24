@@ -284,40 +284,42 @@ void graphToString(struct Graph g,char* str){
 	memcpy(&str[currentIndex], comment, strlen(comment));
 	currentIndex+=strlen(comment);
 	for (i = 0; i<=g.nbMaxNodes; i++){
-		if (lists[i] != NULL && lists[i]->next->value != -1){
+		if (lists[i] != NULL) {
 			sprintf(buffnb, "%d", i);
 			int j = 0;
-			while(buffnb[j] != 0){
+			while (buffnb[j] != 0) {
 				str[currentIndex++] = buffnb[j];
 				j++;
 			}
-			str[currentIndex++]=':';
-			str[currentIndex++]=' ';
-			struct cchainedList* list = goToStart(lists[i]);
-			list = goToStart(list);
-			list = list->next;
-			while (list->value != -1){
-				str[currentIndex++]='(';
-				sprintf(buffnb, "%d", list->value);
-				j=0;
-				while(buffnb[j] != 0){
-					str[currentIndex++] = buffnb[j];
-					j++;
-				}
-				str[currentIndex++]='/';
-				sprintf(buffnb, "%d", list->secondValue);
-				j=0;
-				while(buffnb[j] != 0){
-					str[currentIndex++] = buffnb[j];
-					j++;
-				}
-				str[currentIndex++]=')';
-				str[currentIndex++]=',';
-				str[currentIndex++]=' ';
+			str[currentIndex++] = ':';
+			str[currentIndex++] = ' ';
+			if (lists[i]->next->value != -1) {
+				struct cchainedList *list = goToStart(lists[i]);
+				list = goToStart(list);
 				list = list->next;
+				while (list->value != -1) {
+					str[currentIndex++] = '(';
+					sprintf(buffnb, "%d", list->value);
+					j = 0;
+					while (buffnb[j] != 0) {
+						str[currentIndex++] = buffnb[j];
+						j++;
+					}
+					str[currentIndex++] = '/';
+					sprintf(buffnb, "%d", list->secondValue);
+					j = 0;
+					while (buffnb[j] != 0) {
+						str[currentIndex++] = buffnb[j];
+						j++;
+					}
+					str[currentIndex++] = ')';
+					str[currentIndex++] = ',';
+					str[currentIndex++] = ' ';
+					list = list->next;
+				}
+				currentIndex--;
+				currentIndex--;
 			}
-			currentIndex--;
-			currentIndex--;
 			str[currentIndex++] = '\n';
 		}
 	}
