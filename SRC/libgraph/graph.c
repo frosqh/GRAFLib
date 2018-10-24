@@ -249,6 +249,7 @@ struct Graph loadGraphFromString(char* file){
 			cont = false;
 		}
 	}
+	fclose(f);
 	return g;
 }
 
