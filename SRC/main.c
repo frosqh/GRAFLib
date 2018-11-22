@@ -22,7 +22,7 @@ int main() {
 void menu() {
 
 	displayMenu();
-	while (fgets(val, 50, stdin) && atoi(val) != 10) {
+	while (fgets(val, 50, stdin) && atoi(val) != 11) {
 		switch (atoi(val)) {
 			case 1:
 				printf("Nb max nodes\n");
@@ -157,8 +157,16 @@ void menu() {
 				else
 					printf("Error, The graph has not been saved\n");
 				break;
+			case 10:
+				printf("1. Random heuristic \n");
+				printf("2. Breadth First Search heuristic \n");
+				printf("3. Depth First Search heuristic \n");
+				fgets(val, 50, stdin);
+				if (atoi(val) <= 0 && atoi(val) > 3) break;
+				// Appel de ford-fulkerson avec paramètre pour heuristique
+				break;
 			default:
-			case 10 :
+			case 11 :
 				if (g.nbMaxNodes)
 					//freeGraph(g);
 					deleteGraph(&g);
@@ -181,8 +189,9 @@ void displayMenu() {
 		printf("7. View Graph\n");
 		printf("8. DestroyGraph \n");
 		printf("9. Save Graph \n");
+		printf("10. Flot Max\n");
 	}
-	printf("10. Exit \n");
+	printf("11. Exit \n");
 
 }
 
