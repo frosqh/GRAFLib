@@ -22,7 +22,7 @@ int main() {
 void menu() {
 
 	displayMenu();
-	while (fgets(val, 50, stdin) && atoi(val) != 11) {
+	while (fgets(val, 50, stdin)) {
 		switch (atoi(val)) {
 			case 1:
 				printf("Nb max nodes\n");
@@ -160,10 +160,10 @@ void menu() {
 			case 10:
 				printf("From which source node ?\n");
 				fgets(val, 50, stdin);
-				int s = val;
+				int s = atoi(val);
 				printf("To which sink node ?\n");
 				fgets(val, 50, stdin);
-				int p = val;
+				int p = atoi(val);
 				printf("Which method should be used ?\n");
 				printf("1. Breadth First Search heuristic \n");
 				printf("2. Shortest Path - Floyd Warshall \n");
@@ -171,22 +171,26 @@ void menu() {
 				fgets(val, 50, stdin);
 				if (atoi(val) <= 0 || atoi(val) > 3) break;
 				// Appel de ford-fulkerson avec paramètre pour heuristique
+				clock_t begin = clock();
+				int res;
 				switch(atoi(val)){
 					case 1:
-						printf("Maximal flow : %d \n",flot_max(g, s, p, bfsMethod, NULL));
+						res = flot_max(g, s, p, bfsMethod, NULL);
 						break;
 					case 2:
-						printf("Maximal flow : %d \n",flot_max(g, s, p, shortestMethod, floyd_warshall));
+						res = flot_max(g, s, p, shortestMethod, floyd_warshall);
 						break;
 					case 3:	
-						printf("Maximal flow : %d \n",flot_max(g, s, p, shortestMethod, djikstra));
+						res = flot_max(g, s, p, shortestMethod, djikstra);
 						break;
 				}
+				clock_t end = clock();
+				printf("Maximal flow : %d\n", res);
+				printf("Measured time : %fms",(double)(end - begin)/CLOCKS_PER_SEC*1000);
 				break;
 			default:
 			case 11 :
-				if (g.nbMaxNodes)
-					deleteGraph(&g);
+				deleteGraph(&g);
 				exit(EXIT_SUCCESS);
 		}
 		displayMenu();

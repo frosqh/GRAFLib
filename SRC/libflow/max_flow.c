@@ -7,6 +7,7 @@ int maj_flot(int F, int** flot, struct Graph g, struct amel chaine_amel){
 	int newF = F + delta;
 	int nc;
 	int np;
+
 	do {
 		nc = chaine_amel.chn[queue];
 		np = chaine_amel.orig[queue];
@@ -41,15 +42,18 @@ int flot_max(struct Graph g, int source, int puit, struct amel (*f)(struct Graph
 		}
 	}
 	F = 0;
+	i=0;
 	struct amel chaine_amel;
 
 	while (true){
-		if (chaine_amel.chn != NULL){
+
+		if (i){
 			free(chaine_amel.chn);
 			free(chaine_amel.orig);
 			free(chaine_amel.ec);
 		}
 		chaine_amel = f(g,flot,source,puit,f2);
+		i=1;
 		if (chaine_amel.succes){
 			F = maj_flot(F, flot, g, chaine_amel);
 		} else {
@@ -83,6 +87,8 @@ struct amel bfsMethod(struct Graph g, int** flot,  int source, int puit, int** (
 		marque[i] = 0;
 	}
 
+
+
 	int succes = 0;
 	int head = 1;
 	int queue = 1;
@@ -90,6 +96,7 @@ struct amel bfsMethod(struct Graph g, int** flot,  int source, int puit, int** (
 	orig[1] = NAN;
 	ec[1] = INFINITY;
 	marque[source] = 1;
+
 
 	while (!succes && queue-head>=0){
 		int nc = chn[head];
@@ -113,6 +120,7 @@ struct amel bfsMethod(struct Graph g, int** flot,  int source, int puit, int** (
 		}
 		head++;
 	}
+
 
 	free(marque);
 
@@ -168,7 +176,7 @@ struct amel shortestMethod(struct Graph g, int** flot, int source, int puit, int
 	chaine_amel.source = source;
 	chaine_amel.queue = im;
 
-	for (i = 0;i<N;i++){
+	for (i = 0;i<=im;i++){
 		free(chm[i]);
 	}
 

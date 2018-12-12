@@ -202,9 +202,12 @@ struct Graph loadGraphFromString(char* file){
 						step++;
 					case 3:
 						i=0;
-						while(buff[i]!=':'){
+						while(buff[i]!=':' && buff[i] != EOF){
 							buffnd[i]=buff[i];
 							i++;
+						}
+						if (buff[i] == EOF){
+							break;
 						}
 						buffnd[i]='\0';
 						node = atoi(buffnd);
