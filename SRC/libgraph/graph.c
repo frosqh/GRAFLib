@@ -110,7 +110,7 @@ int removeEdge(struct Graph g, int start, int end) {
 int deleteGraph(struct Graph *g) {
 	if (g == NULL) return -1;
 	if (g->list != NULL) {
-		for (int node = 0; node < g->nbMaxNodes; ++node)
+		for (int node = 0; node < g->nbMaxNodes+1; ++node)
 			if (g->list[node] != NULL) freeList(g->list[node]);
 	}
 	g->nbMaxNodes = 0;

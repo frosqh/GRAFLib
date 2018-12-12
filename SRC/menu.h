@@ -2,6 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+
+
+#include "libflow/max_flow.h"
 #include "libgraph/graph.h"
 
 #ifndef TP2GRAPH_MENU_H

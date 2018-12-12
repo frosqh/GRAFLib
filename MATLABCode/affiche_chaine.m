@@ -1,5 +1,0 @@
-function  affiche_chaine(chn, orig, ec, queue)
-    disp('-------------------------------')
-    disp(chn(1:queue))
-    disp(orig(1:queue))
-    disp(ec(1:queue))

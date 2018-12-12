@@ -158,17 +158,34 @@ void menu() {
 					printf("Error, The graph has not been saved\n");
 				break;
 			case 10:
-				printf("1. Random heuristic \n");
-				printf("2. Breadth First Search heuristic \n");
-				printf("3. Depth First Search heuristic \n");
+				printf("From which source node ?\n");
 				fgets(val, 50, stdin);
-				if (atoi(val) <= 0 && atoi(val) > 3) break;
+				int s = val;
+				printf("To which sink node ?\n");
+				fgets(val, 50, stdin);
+				int p = val;
+				printf("Which method should be used ?\n");
+				printf("1. Breadth First Search heuristic \n");
+				printf("2. Shortest Path - Floyd Warshall \n");
+				printf("3. Shortest Path - Djikstra \n");
+				fgets(val, 50, stdin);
+				if (atoi(val) <= 0 || atoi(val) > 3) break;
 				// Appel de ford-fulkerson avec paramètre pour heuristique
+				switch(atoi(val)){
+					case 1:
+						printf("Maximal flow : %d \n",flot_max(g, s, p, bfsMethod, NULL));
+						break;
+					case 2:
+						printf("Maximal flow : %d \n",flot_max(g, s, p, shortestMethod, floyd_warshall));
+						break;
+					case 3:	
+						printf("Maximal flow : %d \n",flot_max(g, s, p, shortestMethod, djikstra));
+						break;
+				}
 				break;
 			default:
 			case 11 :
 				if (g.nbMaxNodes)
-					//freeGraph(g);
 					deleteGraph(&g);
 				exit(EXIT_SUCCESS);
 		}

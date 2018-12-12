@@ -1,27 +1,7 @@
-#include <math.h>
-#include "graph.h"
-#include "list.h"
+#include "max_flow.h"
 
-#define MIN(X, Y) (((X) < (Y)) ? (X) : (Y));
 
-struct amel {
-	int succes;
-	int *chn;
-	int *orig;
-	int *ec;
-	int source;
-	int queue;
-};
-
-struct val_flot {
-	int **flot;
-	int val;
-};
-
-int **floyd_warshall(struct Graph g, int** flot, int source, int puit);
-int **djikstra(struct Graph g, int** flot, int source, int puit);
-
-struct val_flot maj_flot(int F, int** flot, struct Graph g, struct amel chaine_amel){
+int maj_flot(int F, int** flot, struct Graph g, struct amel chaine_amel){
 	int queue = chaine_amel.queue;
 	int delta = chaine_amel.ec[queue];
 	int newF = F + delta;
@@ -45,46 +25,50 @@ struct val_flot maj_flot(int F, int** flot, struct Graph g, struct amel chaine_a
 		}
 	}
 	while (np!=chaine_amel.source);
-	struct val_flot val;
-	val.val = newF;
-	val.flot = flot;
-	return val;
+	return newF;
 }
 
-int flot_max(struct Graph g, int source, int puit, struct amel (*f)(struct Graph,int**,int,int)){
+int flot_max(struct Graph g, int source, int puit, struct amel (*f)(struct Graph,int**,int,int,int** (*f)(struct Graph,int**,int,int)), int** (*f2)(struct Graph,int**,int,int)){
 	int N = g.nbMaxNodes+1;
 	int i,j;	
 	int *flot[N]; 
     for (i=0; i<N; i++) 
          flot[i] = (int *)malloc(N * sizeof(int)); 
 	int F = 0;
-
 	for (i = 0;i<N;i++){
 		for (j = 0;j<N;j++){
 			flot[i][j] = 0;
 		}
 	}
 	F = 0;
+	struct amel chaine_amel;
 
 	while (true){
-		struct amel chaine_amel = f(g,flot,source,puit);
+		if (chaine_amel.chn != NULL){
+			free(chaine_amel.chn);
+			free(chaine_amel.orig);
+			free(chaine_amel.ec);
+		}
+		chaine_amel = f(g,flot,source,puit,f2);
 		if (chaine_amel.succes){
-			struct val_flot val = maj_flot(F, flot, g, chaine_amel);
-			for (i = 0;i<N;i++){
-				for (j = 0;j<N;j++){
-					flot[i][j] = val.flot[i][j];
-				}
-			}
-			F = val.val;
+			F = maj_flot(F, flot, g, chaine_amel);
 		} else {
 			break;
 		}
 	}
 
+	for (i = 0;i<N;i++){
+		free(flot[i]);	
+	}
+
+	free(chaine_amel.chn);
+	free(chaine_amel.orig);
+	free(chaine_amel.ec);
+
 	return F;
 }
 
-struct amel firstAmel(struct Graph g, int** flot,  int source, int puit){
+struct amel bfsMethod(struct Graph g, int** flot,  int source, int puit, int** (*f)(struct Graph,int**,int,int)){
 	int N = g.nbMaxNodes+1;
 	int *chn = malloc(N * sizeof(int));
 	int *orig = malloc(N * sizeof(int));
@@ -130,6 +114,8 @@ struct amel firstAmel(struct Graph g, int** flot,  int source, int puit){
 		head++;
 	}
 
+	free(marque);
+
 	struct amel chaine_amel;
 	chaine_amel.succes = succes;
 	chaine_amel.chn = chn;
@@ -141,7 +127,7 @@ struct amel firstAmel(struct Graph g, int** flot,  int source, int puit){
 
 }
 
-struct amel shortestAmel(struct Graph g, int** flot, int source, int puit){
+struct amel shortestMethod(struct Graph g, int** flot, int source, int puit, int** (*f)(struct Graph,int**,int,int)){
 	int N = g.nbMaxNodes+1;
 	int *chn = malloc(N*sizeof(int));
 	int *orig = malloc(N*sizeof(int));
@@ -157,7 +143,7 @@ struct amel shortestAmel(struct Graph g, int** flot, int source, int puit){
 	}
 	ec[0] = INFINITY;
 
-	int ** chm = djikstra(g, flot, source, puit);
+	int ** chm = f(g, flot, source, puit);
 
 	i = 0;
 	while (chm[i][0] != -1){
@@ -181,6 +167,13 @@ struct amel shortestAmel(struct Graph g, int** flot, int source, int puit){
 	chaine_amel.ec = ec;
 	chaine_amel.source = source;
 	chaine_amel.queue = im;
+
+	for (i = 0;i<N;i++){
+		free(chm[i]);
+	}
+
+	free(chm);
+	free(marque);
 
 	return chaine_amel;
 }
@@ -219,6 +212,11 @@ int** djikstra(struct Graph g, int** flot, int source, int puit){
 		}
 
 		if (a == -1){
+			free(marque);
+			free(dist);
+			free(p);
+			free(d);
+
 			int **chm = malloc(N*sizeof(int*));
 			chm[0] = malloc(2*sizeof(int));
 			chm[0][0] = -1;
@@ -265,6 +263,11 @@ int** djikstra(struct Graph g, int** flot, int source, int puit){
 
 	chm[i] = malloc(2*sizeof(int));
 	chm[i][0] = -1;
+
+	free(dist);
+	free(p);
+	free(d);
+	free(marque);
 
 	return chm;
 
@@ -363,26 +366,4 @@ int** floyd_warshall(struct Graph g, int** flot, int source, int puit){
 
 	return chm;
 
-}
-
-int main(char args[]){
-	struct Graph g = createGraph(6,true);
-	addNode(g,1);
-	addNode(g,2);
-	addNode(g,3);
-	addNode(g,4);
-	addNode(g,5);
-	addNode(g,6);
-	addEdge(g,1,2,16);
-	addEdge(g,1,3,13);
-	addEdge(g,2,3,10);
-	addEdge(g,3,2,4);
-	addEdge(g,2,4,12);
-	addEdge(g,4,3,9);
-	addEdge(g,3,5,14);
-	addEdge(g,5,4,7);
-	addEdge(g,4,6,20);
-	addEdge(g,5,6,4);
-	printf("%d\n",flot_max(g,1,6,firstAmel));
-	printf("%d\n",flot_max(g,1,6,shortestAmel));
 }
