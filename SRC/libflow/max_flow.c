@@ -220,15 +220,19 @@ int** djikstra(struct Graph g, int** flot, int source, int puit){
 		}
 
 		if (a == -1){
-			free(marque);
-			free(dist);
-			free(p);
-			free(d);
 
-			int **chm = malloc(N*sizeof(int*));
-			chm[0] = malloc(2*sizeof(int));
-			chm[0][0] = -1;
-			return chm;
+			if (!marque[puit]){
+				free(marque);
+				free(dist);
+				free(p);
+				free(d);
+
+				int **chm = malloc(N*sizeof(int*));
+				chm[0] = malloc(2*sizeof(int));
+				chm[0][0] = -1;
+				return chm;
+			}
+			break;
 		}
 
 		marque[a]=1;
@@ -254,7 +258,6 @@ int** djikstra(struct Graph g, int** flot, int source, int puit){
 
 	int current = puit;
 	int i = 0;
-
 	while (p[current] != -1){
 		chm[i] = malloc(2*sizeof(int));
 		chm[i][0] = current;
@@ -288,13 +291,15 @@ int** floyd_warshall(struct Graph g, int** flot, int source, int puit){
 	int D[N][N];
 
 	for (int i = 1; i<N; i++){
-		struct cchainedList* l = g.list[i]->next;
+		struct cchainedList* l = g.list[i];
+		if (l != NULL)
+			l=l->next;
 		for (int j = 1; j<N; j++){
 			W[i][j] = -1;
 			C[i][j] = -1;
 			D[i][j] = 0;
 		}
-		while (l->value != -1){
+		while (l != NULL && l->value != -1){
 			if (l->secondValue - flot[i][l->value] > 0){
 				W[i][l->value] = l->secondValue - flot[i][l->value];
 				C[i][l->value] = l->value; 
