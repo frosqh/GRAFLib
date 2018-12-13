@@ -4,6 +4,9 @@ Arborescence, descriptif des fichiers & utilisation :
    +- LIB
    +- OBJ
    +- SRC
+   |  +- libflow
+   |     +- max_flow.c
+   |     +- max_flow.h
    |  +- libgraph
    |     +- graph.c
    |     +- graph.h
@@ -16,7 +19,7 @@ Arborescence, descriptif des fichiers & utilisation :
    +- ReadMe.txt
 
 Le dossier BIN contient l'executable (graf).
-Le dossier LIB contient les librairies (libgraph, liblist).
+Le dossier LIB contient les librairies (libflow, libgraph, liblist).
 Le dossier OBJ contient l'édition de lien de l'executable et des librairies.
 Le dossier SRC contient le code répartie en sous-dossiers pour les librairies, avec le source et le header respectif,
 puis le source main et son header menu.h.
